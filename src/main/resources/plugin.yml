@@ -1,3 +1,4 @@
-name: My Plugin
+name: MinecraftEventTweet
 version: '${project.version}'
-main: io.github.quietsato.myplugin.MyPlugin
+main: io.github.quietsato.minecraft_event_tweet.MinecraftEventTweet
+authors: [quietsato]
