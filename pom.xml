@@ -109,14 +109,9 @@
             <version>1.5.2</version>
         </dependency>
         <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-client-core-jvm</artifactId>
-            <version>${ktor.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.ktor</groupId>
-            <artifactId>ktor-client-cio-jvm</artifactId>
-            <version>${ktor.version}</version>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-core</artifactId>
+            <version>4.0.7</version>
         </dependency>
     </dependencies>
 </project>
