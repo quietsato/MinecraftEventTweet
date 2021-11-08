@@ -1,18 +1,28 @@
 package io.github.quietsato.minecraft_event_tweet.twitter
 
-import io.ktor.client.*
-import io.ktor.client.engine.cio.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.utils.io.*
+import twitter4j.Twitter
+import twitter4j.TwitterFactory
+import twitter4j.conf.ConfigurationBuilder
 
-class TwitterManager {
-    suspend fun fetchWebApiTest() {
-        val httpClient = HttpClient(CIO)
-        val response: HttpResponse = httpClient.get("https://api.myip.com")
+class TwitterManager(
+    consumerKey: String,
+    consumerSecret: String,
+    accessToken: String,
+    accessTokenSecret: String,
+) {
+    private val twitter: Twitter
 
-        response.content.readUTF8Line().also {
-            println(it)
-        }
+    init {
+        val builder = ConfigurationBuilder()
+        builder.setOAuthConsumerKey(consumerKey)
+            .setOAuthConsumerSecret(consumerSecret)
+            .setOAuthAccessToken(accessToken)
+            .setOAuthAccessTokenSecret(accessTokenSecret)
+
+        twitter = TwitterFactory(builder.build()).instance
+    }
+
+    fun tweetString(s: String) {
+        twitter.updateStatus(s)
     }
 }
