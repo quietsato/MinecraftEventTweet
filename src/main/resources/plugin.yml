@@ -2,3 +2,9 @@ name: MinecraftEventTweet
 version: '${project.version}'
 main: io.github.quietsato.minecraft_event_tweet.MinecraftEventTweet
 authors: [quietsato]
+
+commands:
+  eventtweet:
+    usage: /eventtweet tweet [content]
+    aliases:
+      - et

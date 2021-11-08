@@ -1,12 +1,14 @@
 package io.github.quietsato.minecraft_event_tweet
 
 import io.github.quietsato.minecraft_event_tweet.twitter.TwitterManager
-import kotlinx.coroutines.runBlocking
+import org.bukkit.command.Command
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.EntityType
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.plugin.java.JavaPlugin
+
 
 class MinecraftEventTweet : JavaPlugin(), Listener {
     private var twitterManager: TwitterManager? = null
@@ -19,18 +21,38 @@ class MinecraftEventTweet : JavaPlugin(), Listener {
         saveDefaultConfig()
 
         val tm = initTwitterManager()
-        if (tm == null){
+        if (tm == null) {
             logger.warning("Failed to init TwitterManager. Maybe configuration is invalid.")
             return
         }
         twitterManager = tm
-
-        // DEBUG
-        tm.tweetString("Hello World")
     }
 
     override fun onDisable() {
         logger.info("Plugin deactivated")
+    }
+
+    override fun onCommand(
+        sender: CommandSender?,
+        command: Command?,
+        label: String?,
+        args: Array<out String>?
+    ): Boolean {
+        if (args == null) return false
+
+        if (args[0].lowercase() == "tweet") {
+            if (args.size < 2) return false
+
+            val tweetContent = args[1]
+
+            twitterManager?.also { tm ->
+                tm.tweetString(tweetContent)
+                return true
+            }
+            logger.warning("TwitterManager is not initialised")
+            return false
+        }
+        return false
     }
 
     @EventHandler
